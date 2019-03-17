@@ -20,6 +20,8 @@ public class GraphGenerator {
                 int position = ih.getPosition();
                 cfg.addNode(position, m, jc);
                 Instruction inst = ih.getInstruction();
+                InstructionHandle inst_hdl_nxt = ih.getNext();
+
                 // your code goes here
                 // need to add edges
                     // figure out if it's a branching instruction or not
@@ -31,6 +33,10 @@ public class GraphGenerator {
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
 
+                if(inst_hdl_nxt != null){
+                    int pos2 = inst_hdl_nxt.getPosition();
+                    cfg.addEdge(position, m, jc, pos2, m, jc);
+                }
             }
         }
         return cfg;
