@@ -1,3 +1,8 @@
+// Name: Akaash Chikarmane
+// UTEID: avc536
+// Assignment: Software Testing (EE 360T) - Problem Set #1
+// Problem: 1.2 Testing add()
+
 package pset1;
 
 import org.junit.Test;
@@ -28,6 +33,8 @@ public class SLListAddTester {
         assertTrue(l.header != null);
         // your code goes here
         assertFalse(l.header.elem);
+        assertNotNull(l.header.next);
         assertTrue(l.header.next.elem);
+        assertNull(l.header.next.next);
     }
 }

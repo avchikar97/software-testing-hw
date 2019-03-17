@@ -1,3 +1,8 @@
+// Name: Akaash Chikarmane
+// UTEID: avc536
+// Assignment: Software Testing (EE 360T) - Problem Set #1
+// Problem: 1.3 Testing repOk()
+
 package pset1;
 
 import static org.junit.Assert.*;
@@ -11,6 +16,7 @@ public class SLListRepOkTester {
     }
 
     // Testing acyclic data structures w/ 1 element
+    // Doesn't really matter what elem value is so go with default
     @Test public void t1() {
         SLList l = new SLList();
         Node n1 = new Node();
@@ -20,6 +26,7 @@ public class SLListRepOkTester {
         assertTrue(l.repOk());
     }
     // Testing cyclical data structure w/ 1 element
+    // Doesn't really matter what elem value is so go with default
     @Test public void t2(){
         SLList l = new SLList();
         Node n1 = new Node();
@@ -29,6 +36,7 @@ public class SLListRepOkTester {
         assertFalse(l.repOk());
     }
     // Testing acyclical data structure w/ 2 elements
+    // Doesn't really matter what elem value is so go with default
     @Test public void t3(){
         SLList l = new SLList();
         Node n1 = new Node();
@@ -40,6 +48,7 @@ public class SLListRepOkTester {
         assertTrue(l.repOk());
     }
     // Testing cyclical data structure w/ 2 elements
+    // Doesn't really matter what elem value is so go with default
     @Test public void t4(){
         SLList l = new SLList();
         Node n1 = new Node();

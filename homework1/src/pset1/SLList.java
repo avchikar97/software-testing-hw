@@ -1,3 +1,8 @@
+// Name: Akaash Chikarmane
+// UTEID: avc536
+// Assignment: Software Testing (EE 360T) - Problem Set #1
+// Problem: 1.1 implementing add()
+
 package pset1;
 import java.util.HashSet;
 import java.util.Set;
