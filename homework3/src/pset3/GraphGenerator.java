@@ -33,7 +33,8 @@ public class GraphGenerator {
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
 
-                if(inst_hdl_nxt != null){
+                    // if it's not a branch instruction, make sure there's something next and it's not the final bytecode instruction for the method
+                if((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto"))){
                     int pos2 = inst_hdl_nxt.getPosition();
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
