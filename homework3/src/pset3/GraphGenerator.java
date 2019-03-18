@@ -50,7 +50,7 @@ public class GraphGenerator {
         ConstantPoolGen cpg = cg.getConstantPool();
         Method[] methods = cg.getMethods();
 
-        for (Method m: cg.getMethods()) {
+        for (Method m: methods) {
             MethodGen mg = new MethodGen(m, cg.getClassName(), cpg);
             InstructionList il = mg.getInstructionList();
             InstructionHandle[] handles = il.getInstructionHandles();
