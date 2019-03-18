@@ -33,7 +33,7 @@ public class GraphGenerator {
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
 
-                    // if it's not a branch instruction, make sure there's something next and it's not the final bytecode instruction for the method
+                    // if it's not a branch instruction, make sure there's something next and it's NOT the final bytecode instruction for the method
                 if((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto"))){
                     int pos2 = inst_hdl_nxt.getPosition();
                     cfg.addEdge(position, m, jc, pos2, m, jc);
@@ -82,8 +82,8 @@ public class GraphGenerator {
                     }
                 }
 
-                // if it's not a branch instruction, make sure there's something next and it's not the final bytecode instruction for the method
-                if ((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto"))) {
+                // if it's not a branch instruction, make sure there's something next, it's NOT the final bytecode instruction for the method, and it's NOT an invocation
+                if ((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto")) && (!inst.toString().contains("invoke"))) {
                     int pos2 = inst_hdl_nxt.getPosition();
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
