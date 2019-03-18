@@ -1,7 +1,12 @@
 package pset3;
 import java.util.*;
+
+import org.apache.bcel.Repository;
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
+import org.apache.bcel.generic.ClassGen;
+import org.apache.bcel.generic.ConstantPoolGen;
+
 public class CFG {
     Set<Node> nodes = new HashSet<Node>();
     Map<Node, Set<Node>> edges = new HashMap<Node, Set<Node>>();
@@ -68,6 +73,61 @@ public class CFG {
     }
     public boolean isReachable(String methodFrom, String clazzFrom, String methodTo, String clazzTo) {
         // you will implement this method in Question 2.2
-        return false;
+
+        if(methodFrom.equals(methodTo) && clazzFrom.equals(clazzTo)){
+            return true;
+        }
+
+        ClassInfo ciFrom = new ClassInfo();
+        ClassInfo ciTo = new ClassInfo();
+
+        try {
+            ciFrom.getInfo(clazzFrom);
+            ciTo.getInfo(clazzTo);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false; // class does not exist
+        }
+
+        // basic check to make sure the possibility exists
+        if((ciFrom.cg.containsMethod(methodFrom, null) == null) || (ciTo.cg.containsMethod(methodTo, null) == null)){
+            return false; // methods don't exist in class
+        }
+
+        Queue<Node> queue = new LinkedList<Node>();
+        // set em up
+        for(Node node : this.nodes){
+            if(node.getMethod().getName().equals(methodFrom) && node.getClazz().getClassName().equals(clazzFrom)){
+                queue.add(node);
+            }
+        }
+        // knock em down
+        while(!queue.isEmpty()){
+            Node testNode = queue.remove();
+            if(testNode.getMethod().getName().equals(methodTo) && testNode.getClazz().getClassName().equals(clazzTo)){
+                return true;// we did it
+            }
+            for(Node neighbor : edges.get(testNode)){// exhaustive search through all neighbors
+                queue.add(neighbor);
+            }
+        }
+
+        return false;// didn't find it in queue
+    }
+
+    // little helper class to extract helpful information
+    public static class ClassInfo{
+        JavaClass jc = null;
+        ClassGen cg = null;
+        ConstantPoolGen cpg = null;
+        Method[] methods = null;
+
+
+        public void getInfo(String className) throws ClassNotFoundException{
+            this.jc = Repository.lookupClass(className);
+            this.cg = new ClassGen(jc);
+            this.cpg = this.cg.getConstantPool();
+            this.methods = cg.getMethods();
+        }
     }
 }
