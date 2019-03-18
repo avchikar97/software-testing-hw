@@ -96,21 +96,22 @@ public class CFG {
             return false; // methods don't exist in class
         }
 
-        Queue<Node> queue = new LinkedList<Node>();
+        Queue<Node> checkQueue = new LinkedList<Node>();
         // set em up
         for(Node node : this.nodes){
             if(node.getMethod().getName().equals(methodFrom) && node.getClazz().getClassName().equals(clazzFrom)){
-                queue.add(node);
+                checkQueue.add(node);
             }
         }
         // knock em down
-        while(!queue.isEmpty()){
-            Node testNode = queue.remove();
+        while(!checkQueue.isEmpty()){
+            Node testNode = checkQueue.remove();
             if(testNode.getMethod().getName().equals(methodTo) && testNode.getClazz().getClassName().equals(clazzTo)){
                 return true;// we did it
             }
             for(Node neighbor : edges.get(testNode)){// exhaustive search through all neighbors
-                queue.add(neighbor);
+                if(!checkQueue.contains(neighbor))// don't get stuck in loops (don't check the same node twice)
+                    checkQueue.add(neighbor);
             }
         }
 
