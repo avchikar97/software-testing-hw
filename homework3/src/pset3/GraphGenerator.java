@@ -34,7 +34,7 @@ public class GraphGenerator {
                 }
 
                     // if it's not a branch instruction, make sure there's something next and it's NOT the final bytecode instruction for the method
-                if((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto"))){
+                else if((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto"))){
                     int pos2 = inst_hdl_nxt.getPosition();
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
@@ -62,7 +62,7 @@ public class GraphGenerator {
 
                 // your code goes here
                 // need to add edges
-                // figure out if it's a branching instruction or not
+                    // figure out if it's a branching instruction or not
                 if (inst instanceof BranchInstruction) {
                     // if it is, figure out where it's going and make an edge
                     BranchInstruction inst_br = (BranchInstruction) inst;
@@ -71,7 +71,8 @@ public class GraphGenerator {
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
 
-                if (inst instanceof INVOKESTATIC) {
+                    // figure out if it's an instruction that invokes another method
+                else if (inst instanceof INVOKESTATIC) {
                     INVOKESTATIC inst_invk_stat = (INVOKESTATIC) inst;
                     String str_inst = inst.toString();
                     int invk_index = str_inst.lastIndexOf(' ') + 1;
@@ -82,8 +83,8 @@ public class GraphGenerator {
                     }
                 }
 
-                // if it's not a branch instruction, make sure there's something next, it's NOT the final bytecode instruction for the method, and it's NOT an invocation
-                if ((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto")) && (!inst.toString().contains("invoke"))) {
+                    // if it's not a branch instruction, make sure there's something next, it's NOT the final bytecode instruction for the method, and it's NOT an invocation
+                else if ((inst_hdl_nxt != null) && (!inst.toString().contains("return")) && (!inst.toString().contains("goto")) && (!inst.toString().contains("invoke"))) {
                     int pos2 = inst_hdl_nxt.getPosition();
                     cfg.addEdge(position, m, jc, pos2, m, jc);
                 }
